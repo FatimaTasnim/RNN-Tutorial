@@ -17,7 +17,7 @@ There are different kinds of RNN. We will discuss them shortly after building a 
 # Building A Basic Unidirectional RNN
 For Natural Language Processing, RNN can read a sentence word by word in times and as RNN has a memory it can remember some information/context through the hidden layer activations that get passed from one time-step to the next(connecting the inputs). This allows a uni-directional RNN to take information from the past to process later inputs. You can get a good idea of RNN from the following figure<br><br>
 
-![Basic RNN](BasicRNN.jpg)
+![Basic RNN](Images/BasicRNN.jpg)
 <br><br>
 
 ## Forward propagation
@@ -25,11 +25,11 @@ For Natural Language Processing, RNN can read a sentence word by word in times a
 - a(t) is activation for each timestep.
 - y(t) is output of each timestep.
 <br> <br>
-![ForwardProp](ForwardProp.png)
+![ForwardProp](Images/ForwardProp.png)
 <br> <br>
 
 To implement this, at first we have to understand how a single RNN cell works. A single RNN cell takes activation and weight of previous time step as well as input & weight of current time step and produces output & activation of current cell. The following figure shows how a single cell of RNN works<br><br>
-![RNN-Cell](RNN-cell.png)
+![RNN-Cell](Images/RNN-cell.png)
 
 ### Implementation of a Single RNN Cell
 ```Python
