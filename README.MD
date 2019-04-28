@@ -52,7 +52,7 @@ You can get a good idea of RNN forward propagation from the following figure<br>
 ![ForwardProp](Images/ForwardProp.png)
 <br> <br>
 
-So, to implement the forward propagation of the recurrent neural network described in the last figure call the **rnn_forward** which is given in ForwardPropagation.py code file. 
+So, to implement the forward propagation of the recurrent neural network described in the last figure - **rnn_forward** which is given in ForwardPropagation.py code file. 
 
 ```Python
 def rnn_forward(x, a0, parameters):
@@ -104,7 +104,7 @@ If we look through the function we see it takes the inputs described in Argument
 A single RNN cell takes activation and weight of the previous time step as well as input & weight of the current time step and produces output & activation of the current cell. The following figure shows how a single cell of RNN works..<br><br>
 ![RNN-Cell](Images/RNN-cell.png)
 <br><br>
-To implement unit cell of an recurrent neural network described in the last figure call the **rnn_forward** which is given in RNN_UNIT_CELL.py code file.
+To implement unit cell of an recurrent neural network described in the last figure - **rnn_forward** which is given in RNN_UNIT_CELL.py code file.
 ## Implementation of a Single RNN Cell
 ```Python
     def rnn_cell_forward(xt, a_prev, parameters):
@@ -150,7 +150,7 @@ So, We are done with Propagation. Now, to understand this code properly you can 
 ## RNN Backpropagation
 We know, how a traditional backpropagation function works. Here, in each backward pass we will sum up the gradient into the weight matrix W. So, in backpropagation of the model, we will have separate W following from each of the time steps and then the final gradient of the W will be the sum of all of those individual time step gradients.
 
-So, to implement the forward propagation of the recurrent neural network described in the last figure call the **rnn_backward** which is given in BackwardPropagation.py code file. 
+So, to implement the forward propagation of the recurrent neural network described in the last figure - **rnn_backward** which is given in BackwardPropagation.py code file. 
 
 ```Python
 import numpy as np
@@ -210,7 +210,7 @@ def rnn_backward(da, caches):
 If we look through the function we see it takes the inputs described in Argument section and it loops over for T times and each time we are calling  **rnn_cell_backwardward** function(summing the gradients).
 
 ### RNN Cell Backward(Unit Cell of RNN)
-To implement unit cell of an recurrent neural network described in the last figure call the **rnn_backward** which is given in RNN_UNIT_CELL.py code file.
+To implement unit cell of an recurrent neural network described in the last figure - **rnn_backward** which is given in RNN_UNIT_CELL.py code file.
 ## Implementation of a Single RNN backward Cell
 
 ```Python
@@ -302,15 +302,9 @@ Again, You can run the LSTM code (Basic LSTM/LSTM.py) first and see the output f
 <br><br>
 ```Python 
 def LSTM_forward(x, a0, parameters):
-    """
-   
-    
-    """
-
     # Initialize "caches", which will track the list of all the caches
     caches = []
     
-    ### START CODE HERE ###
     # Retrieve dimensions from shapes of x and parameters['Wy'] (≈2 lines)
     n_x, m, T_x = x.shape
     n_y, n_a = parameters['Wy'].shape
@@ -336,10 +330,7 @@ def LSTM_forward(x, a0, parameters):
         c[:,:,t]  = c_next
         # Append the cache into caches (≈1 line)
         caches.append(cache)
-     
-        
-    ### END CODE HERE ###
-    
+
     # store values needed for backward propagation in cache
     caches = (caches, x)
 
@@ -380,9 +371,9 @@ Now, It's time to pay attention to the Ruling function where the magic lays.
 ![lstm](Images/lstmu1.1.png)
 <br><br>
 
-Above figure describes the gates and used funtions. I'm not showing any mathemetical proof of these function. If you want to play a little with mathemetics behind these functions you can look into this [Tutorial](http://arunmallya.github.io/writeups/nn/lstm/index.html#/)
+Above figure describes the gates and used functions. I'm not showing any mathematical proof of these function. If you want to play a little with the mathematics behind these functions you can look into this [Tutorial](http://arunmallya.github.io/writeups/nn/lstm/index.html#/)
 
-To implement unit cell of an LSTM described in the last figure call the **LSTM_forward** which is given in LSTM_UNIT_CELL.py code file.
+To implement unit cell of an LSTM described in the last figure  **LSTM_forward** which is given in LSTM_UNIT_CELL.py code file.
 ```Python
 def lstm_cell_forward(xt, a_prev, c_prev, parameters):
     # Retrieve parameters from "parameters"
@@ -445,4 +436,3 @@ def lstm_cell_forward(xt, a_prev, c_prev, parameters):
     
 **Note: ft/it/ot stand for the forget/update/output gates, cct stands for the candidate value (c tilde), c stands for the memory value**
 
-## LSTM BackPropagation
