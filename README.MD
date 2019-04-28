@@ -40,7 +40,7 @@ There are different kinds of RNN. We will discuss them shortly after building a 
 - Step 5: Generating some random inputs
 - Step 6: Looking into the outputs.
 
-We will build the code step by step. But as we love to get the output first so you can download the code files from this repository and run the RNN.py and you should get 2 outputs for "Forward Propagation" and Backward Propagation. 
+We will build the code step by step. But as we love to get the output first  😛 so you can download the code files from this repository and run the RNN.py and you should get 2 outputs for "Forward Propagation" and Backward Propagation. 
 
 So, If you look into the RNN.py code you can see at first we called a DataGenerator() function to generate some random inputs. We will discuss this function a bit later. And after this function, we called our Forward Propagation Function **rnn_forward**.
 
@@ -262,23 +262,48 @@ def rnn_cell_backward(da_next, cache):
 ### RNN Backpropagation Problems
 One major problem occurs when we work on large dataset. And in real world Data Sets are large. Because every time we make a gradient step we will have to make a forward pass through the entire training sequence and then make a backward pass through the entire sequence and then make a single gradient update. And we cannot do this as, 
 - It Will be super slow. So, the model will never converge.
-- It will take huge amount of memory.
+- It will take huge amount of memory which is expensive.
 
 So, In practice to avoid such problem we can do some optimization. And that is called Truncated Backpropagation through time.
 
 #### Truncated Backpropagation
-The idea of Truncated BackPropagation is simple. We take a chunk of sequence, do forward pass on it and calculate the loss for this chunk and do forward pass on it and make a gradient step.<br><br>
+The idea of Truncated BackPropagation is simple. We take a chunk of sequence, do forward pass on it and calculate the loss for this chunk and do backward pass on it and make a gradient step.<br><br>
  ![TBTT](Images/TBTT.png)
 
  <br><br>
                 
-Finally, It's time to merge the pieces together and run the code again. And now we can look into the DataGenerated() function we talked about earlier. As we are not importing any dataset so in DataGeneration() function we are generating all input variables randomly.
+Finally, It's time to merge the pieces together and run the code again. And now we can look into the DataGeneration() function we talked about earlier. As we are not importing any dataset so in DataGeneration() function we are generating all input variables randomly.
 
 I hope you've understood the whole idea of RNN properly. If you don't please look into the code files and try to understand the codes line by line and I hope you will be able to relate the code with this tutorial.
 
 # Lackings of RNNs
 Though RNN has the power of working well on sequences still it faces difficulties learning long-range dependencies. 
 
-**Gradient Vanishing:** Usually, we use **tanh** activation function which squishes a large change in the input space into a small space. So, for shallow a small input sequence, this architecture works fine. However, when more inputs added to the sequence it can cause a gradient to be too small for the earlier cells of RNN. And eventually it turns into zero gradient and this is the gradient vanishing point. So, it actually doesn't relate the basic concept of RNN as we are supposed to emphasize the full input sequence rather than emphasizing on the latest part of the sequence.
+**Gradient Vanishing:** Usually, we use **tanh** activation function which squishes a large change in the input space into a small space. So, for shallow a small input sequence, this architecture works fine. However, when more inputs added to the sequence it can cause a gradient to be too small for the earlier cells of RNN. And eventually it turns into zero gradient and this is the gradient vanishing point. So, it actually doesn't relate the basic concept of RNN 🔥 as we are supposed to emphasize the full input sequence rather than emphasizing on the latest part of the sequence.
 
-To get rid of this problem we have 2 models LSTM and GRU.
+**Exploding gradients problem:**
+Opposite to vanishing gradient problem, while following chain rule we multiply with the weight matrix(transposed W )too at each step, and if the values are larger than 1, multiplying a large number to itself many times leads to a very large number leading to explosion of gradient.
+
+To get rid of these problems easily, we can just add some constant value alpha to every time step (it will add some weight to each hidden layer/input layers) so, each and every input will get emphasized in a constant rate. This constant adding concept is called **Leaky Recurrent Unit**. But, this **LRU** concept confirms equality and we prefer equity rather than equality. So, to confirm equity we have a new concept - **Gated Recurrent Networks**  
+
+![GRU](Images/GRU1.2.png)
+
+**Gated Recurrent Networks** : Instead of menually assigning a constant value alpha to determine what to retain we introduce a set of parameters one for every timestep and leave it up to the network to decide what to remember and what to forget by introducing new parameters that act as gates.  One of the Gated Recurrent Network model is called LSTM(Long Short Term Memory). 
+ 
+# Long Short Term Memory(LSTM)
+To, Get the idea of LSTM easily we must look into the following figure<br><br>
+
+![LSTM](Images/LSTM1.1.png)
+<br><br>
+Can you relate this figure? Same old RNN figure where RNN cell is replaced with LSTM cell. So, Only thing we need to learn is a single LSTM UNIT CELL.  😃
+
+## LSTM UNIT CELL
+- Each LSTM cell maintains a cell state vector and in each timestep the LSTM cell can chose to read from this vector re-write to this vector or reset the cell using a gating machanism. 
+- Each Unit has 3 gates of same shape. 
+   - Input Gate: Controls Whether the memory cell is updated.
+   - Control Gate: Decides whether the memory cell is to be reseted
+   - Output Gate: Controls whether the information of the current cell is made visible.
+  
+  All of these gates are binary gates. And so they uses a sigmoid activation.
+- LSTM unit holds another vector that modifies the cell state. Here, It has tanh activation as tanh distributes gradients hence prevents Gradient Vanishing / Exploding.  
+
